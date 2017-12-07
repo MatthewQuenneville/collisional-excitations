@@ -389,22 +389,20 @@ class Ensemble:
                         atom2.exc = 1
 
         elif atom1.exc == 0 and atom2.exc == 1:
+            if np.random.rand() < atom2.f_de(E_cm, mu):
+                E_cm += atom2.chi
+                atom2.exc = 0
             if E_cm > atom1.chi and np.random.rand() < atom1.f_ex:
                 E_cm -= atom1.chi
                 atom1.exc = 1
 
-            if np.random.rand() < atom2.f_de(E_cm, mu):
-                E_cm += atom2.chi
-                atom2.exc = 0
-
         elif atom1.exc == 1 and atom2.exc == 0:
-            if E_cm > atom2.chi and np.random.rand() < atom2.f_ex:
-                E_cm -= atom2.chi
-                atom2.exc = 1
-
             if np.random.rand() < atom1.f_de(E_cm, mu):
                 E_cm += atom1.chi
                 atom1.exc = 0
+            if E_cm > atom2.chi and np.random.rand() < atom2.f_ex:
+                E_cm -= atom2.chi
+                atom2.exc = 1
 
         elif atom1.exc == 1 and atom2.exc == 1:
             if np.random.rand() < atom1.f_de(E_cm, mu):
